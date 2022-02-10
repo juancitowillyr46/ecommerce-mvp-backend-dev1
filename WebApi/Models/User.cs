@@ -19,7 +19,7 @@ namespace WebApi.Models
         public string Password {get; set;}
         
         [Required]
-        public DateTime CreateOn {get; set;}
+        public DateTime CreatedOn {get; set;}
 
         [Required]
         public Boolean Block {get; set;}
