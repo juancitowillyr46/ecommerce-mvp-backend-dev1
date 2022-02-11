@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using WebApi.Data;
 
 namespace api
 {
@@ -28,6 +29,11 @@ namespace api
         {
 
             services.AddControllers();
+
+            services.AddScoped<IUserRepository, MockUserRepository>();
+            services.AddScoped<IProductRepository, MockProductRepository>();
+            services.AddScoped<ICategoryRepository, MockCategoryRepository>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });

@@ -10,9 +10,9 @@ namespace WebApi.Controllers
     public class UsersController: ControllerBase
     {
         private readonly IUserRepository _repository;
-        public UsersController()
+        public UsersController(IUserRepository repository)
         {
-            _repository = new MockUserRepository();
+            _repository = repository;
         }
 
         [HttpGet()]

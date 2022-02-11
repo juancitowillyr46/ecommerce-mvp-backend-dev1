@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Models
 {   
-    class Category
+    public class Category
     {
         [Key]
         public int Id { get; set; }
