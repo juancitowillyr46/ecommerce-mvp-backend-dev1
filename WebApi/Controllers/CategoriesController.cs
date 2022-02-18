@@ -9,9 +9,9 @@ namespace WebApi.Controllers
     [ApiController]
     public class CategoriesController: ControllerBase
     {
-        private readonly ICategoryRepository _repository;
+        private readonly ICategoriesRepository _repository;
 
-        public CategoriesController(ICategoryRepository repository)
+        public CategoriesController(ICategoriesRepository repository)
         {
             _repository = repository;
         }

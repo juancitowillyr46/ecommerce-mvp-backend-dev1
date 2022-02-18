@@ -3,7 +3,7 @@ using WebApi.Models;
 
 namespace WebApi.Data
 {
-    public interface ICategoryRepository
+    public interface ICategoriesRepository
     {
         IEnumerable<Category> GetAllCategories();
         void CreateCategory(Category category);

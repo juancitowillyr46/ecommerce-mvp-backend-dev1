@@ -3,7 +3,7 @@ using WebApi.Models;
 
 namespace WebApi.Data
 {
-    public class MockCategoryRepository : ICategoryRepository
+    public class MockCategoriesRepository : ICategoriesRepository
     {
         public void CreateCategory(Category category)
         {

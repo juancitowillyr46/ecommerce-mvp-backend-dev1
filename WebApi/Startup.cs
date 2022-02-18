@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using WebApi.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace api
 {
@@ -28,11 +29,17 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
 
+            // Configuración Db Context
+            services.AddDbContext<AppDbContext> (opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddControllers();
 
+            // Configuración Interfaces
             services.AddScoped<IUserRepository, MockUserRepository>();
-            services.AddScoped<IProductRepository, MockProductRepository>();
-            services.AddScoped<ICategoryRepository, MockCategoryRepository>();
+            services.AddScoped<ICategoriesRepository, SqlCategoriesRepository>();
+            services.AddScoped<IProductRepository, SqlProductsRepository>();
+            //services.AddScoped<IProductRepository, MockProductRepository>();
+            //services.AddScoped<ICategoryRepository, MockCategoryRepository>();
 
             services.AddSwaggerGen(c =>
             {
