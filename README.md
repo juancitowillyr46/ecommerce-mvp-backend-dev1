@@ -9,3 +9,5 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 5.0.14
 
 dotnet ef migrations add InitialMigration
 dotnet ef migrations remove
+
+dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection

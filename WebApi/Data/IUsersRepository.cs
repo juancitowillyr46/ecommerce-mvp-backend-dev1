@@ -3,9 +3,9 @@ using WebApi.Models;
 
 namespace WebApi.Data
 {
-    public interface IUserRepository
+    public interface IUsersRepository
     {
-        IEnumerable<User> GetAllUser();
+        IEnumerable<User> GetAllUsers();
         void CreateUser(User user);
         User GetUserById(int id);
         void UpdateUser(User user);

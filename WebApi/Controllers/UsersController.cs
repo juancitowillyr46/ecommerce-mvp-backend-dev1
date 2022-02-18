@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
+using WebApi.Dtos;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -9,24 +11,28 @@ namespace WebApi.Controllers
     [ApiController]
     public class UsersController: ControllerBase
     {
-        private readonly IUserRepository _repository;
-        public UsersController(IUserRepository repository)
+        private readonly IUsersRepository _repository;
+
+        private readonly IMapper _mapper;
+        
+        public UsersController(IUsersRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        [HttpGet()]
-        public ActionResult <IEnumerable<User>> GetAllUsers()
-        {
-            var userItems = _repository.GetAllUser();
-            return Ok(userItems);
-        }
+        // [HttpGet()]
+        // public ActionResult <IEnumerable<User>> GetAllUsers()
+        // {
+        //     var userItems = _repository.GetAllUsers();
+        //     return Ok(userItems);
+        // }
 
         [HttpGet("{id}")]
-        public ActionResult <User> GetUserById(int id)
+        public ActionResult <UserReadDto> GetUserById(int id)
         {
             var userItem = _repository.GetUserById(id);
-            return Ok(userItem);
+            return Ok(_mapper.Map<UserReadDto>(userItem));
         }
     }
 }

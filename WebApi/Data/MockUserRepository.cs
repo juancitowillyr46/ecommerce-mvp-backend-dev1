@@ -4,7 +4,7 @@ using WebApi.Models;
 
 namespace WebApi.Data
 {
-    public class MockUserRepository : IUserRepository
+    public class MockUsersRepository : IUsersRepository
     {
         public void CreateUser(User user)
         {
@@ -16,7 +16,7 @@ namespace WebApi.Data
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<User> GetAllUser()
+        public IEnumerable<User> GetAllUsers()
         {
             var users = new List<User>
             {

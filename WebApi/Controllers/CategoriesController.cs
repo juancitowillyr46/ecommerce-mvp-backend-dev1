@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
+using WebApi.Dtos;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -10,24 +12,26 @@ namespace WebApi.Controllers
     public class CategoriesController: ControllerBase
     {
         private readonly ICategoriesRepository _repository;
+        private readonly IMapper _mapper;
 
-        public CategoriesController(ICategoriesRepository repository)
+        public CategoriesController(ICategoriesRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet()]
-        public ActionResult <IEnumerable<Category>> GetAllCategories()
+        public ActionResult <IEnumerable<CategoryReadDto>> GetAllCategories()
         {
             var categoriesItems = _repository.GetAllCategories();
-            return Ok(categoriesItems);
+            return Ok(_mapper.Map<List<CategoryReadDto>>(categoriesItems));
         }
 
-        [HttpGet("{id}")]
-        public ActionResult <Category> GetCategoryById(int id)
-        {
-            var categoryItem = _repository.GetCategoryById(id);
-            return Ok(categoryItem);
-        }
+        // [HttpGet("{id}")]
+        // public ActionResult <CategoryReadDto> GetCategoryById(int id)
+        // {
+        //     var categoryItem = _repository.GetCategoryById(id);
+        //     return Ok(_mapper.Map<CategoryReadDto>(categoryItem));
+        // }
     }
 }

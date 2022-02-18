@@ -29,17 +29,18 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            // Configuración Db Context
+            // Configuración Db Context (Base de datos)
             services.AddDbContext<AppDbContext> (opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
 
             // Configuración Interfaces
-            services.AddScoped<IUserRepository, MockUserRepository>();
+            services.AddScoped<IUsersRepository, SqlUsersRepository>();
             services.AddScoped<ICategoriesRepository, SqlCategoriesRepository>();
             services.AddScoped<IProductRepository, SqlProductsRepository>();
-            //services.AddScoped<IProductRepository, MockProductRepository>();
-            //services.AddScoped<ICategoryRepository, MockCategoryRepository>();
+
+            // Automapper para DTO
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddSwaggerGen(c =>
             {

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
+using WebApi.Dtos;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -10,24 +12,26 @@ namespace WebApi.Controllers
     public class ProductsController: ControllerBase
     {
         private readonly IProductRepository _repository;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IProductRepository repository)
+        public ProductsController(IProductRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet()]
-        public ActionResult <IEnumerable<Product>> GetAllProducts()
+        public ActionResult <IEnumerable<ProductReadDto>> GetAllProducts()
         {
             var productItems = _repository.GetAllProducts();
-            return Ok(productItems);
+            return Ok(_mapper.Map<List<ProductReadDto>>(productItems));
         }
 
         [HttpGet("{id}")]
-        public ActionResult <Product> GetProductById(int id)
+        public ActionResult <ProductReadDetailDto> GetProductById(int id)
         {
             var productItem = _repository.GetProductById(id);
-            return Ok(productItem);
+            return Ok(_mapper.Map<ProductReadDetailDto>(productItem));
         }
     }
 }

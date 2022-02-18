@@ -26,12 +26,10 @@ namespace WebApi.Data
         public IEnumerable<Product> GetAllProducts()
         {
             return _context.Products.ToList();
-            // throw new System.NotImplementedException();
         }
 
         public Product GetProductById(int id)
         {
-            //throw new System.NotImplementedException();
             return _context.Products.FirstOrDefault<Product>(p => p.Id == id);
         }
 
