@@ -27,6 +27,11 @@ namespace WebApi.Data
             return users;
         }
 
+        public User GetUserByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public User GetUserById(int id)
         {
             return new User{Id=1,Username="juan-rodas", Password="123456", Email="juan.rodas.manez@gmail.com", CreatedOn=DateTime.Now, Block=false};

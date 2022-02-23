@@ -10,5 +10,6 @@ namespace WebApi.Data
         User GetUserById(int id);
         void UpdateUser(User user);
         void DeleteUser(int id);
+        User GetUserByEmail(string email);
     }   
 }

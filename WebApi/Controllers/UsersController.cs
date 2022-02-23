@@ -34,5 +34,6 @@ namespace WebApi.Controllers
             var userItem = _repository.GetUserById(id);
             return Ok(_mapper.Map<UserReadDto>(userItem));
         }
+        
     }
 }

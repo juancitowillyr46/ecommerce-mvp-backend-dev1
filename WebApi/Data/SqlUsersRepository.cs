@@ -28,6 +28,11 @@ namespace WebApi.Data
             return _context.Users.ToList();
         }
 
+        public User GetUserByEmail(string email)
+        {
+            return _context.Users.FirstOrDefault<User>(opt => opt.Email == email);
+        }
+
         public User GetUserById(int id)
         {
             return _context.Users.FirstOrDefault<User>(opt => opt.Id == id);

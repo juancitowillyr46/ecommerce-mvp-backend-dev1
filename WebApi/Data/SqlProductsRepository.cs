@@ -15,7 +15,7 @@ namespace WebApi.Data
 
         public void CreateProduct(Product product)
         {
-            throw new System.NotImplementedException();
+            _context.SaveChanges();
         }
 
         public void DeleteProduct(int id)
