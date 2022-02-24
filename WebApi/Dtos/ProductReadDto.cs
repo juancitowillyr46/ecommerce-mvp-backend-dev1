@@ -1,3 +1,5 @@
+using WebApi.Models;
+
 namespace WebApi.Dtos
 {
     public class ProductReadDto
@@ -6,5 +8,8 @@ namespace WebApi.Dtos
         public string Name {get; set;}
         public string CoveImage {get; set;}
         public decimal Price {get; set;}
+        public int CategoryId {get; set;}
+        
+        //public string CategoryName {get; set;}
     }
 }

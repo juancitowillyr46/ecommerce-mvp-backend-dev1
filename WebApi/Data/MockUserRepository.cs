@@ -37,6 +37,11 @@ namespace WebApi.Data
             return new User{Id=1,Username="juan-rodas", Password="123456", Email="juan.rodas.manez@gmail.com", CreatedOn=DateTime.Now, Block=false};
         }
 
+        public bool SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateUser(User user)
         {
             throw new System.NotImplementedException();

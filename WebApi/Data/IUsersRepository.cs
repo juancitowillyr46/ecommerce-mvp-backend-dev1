@@ -11,5 +11,7 @@ namespace WebApi.Data
         void UpdateUser(User user);
         void DeleteUser(int id);
         User GetUserByEmail(string email);
+
+        bool SaveChanges();
     }   
 }

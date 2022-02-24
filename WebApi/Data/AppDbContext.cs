@@ -9,9 +9,19 @@ namespace WebApi.Data
         {
             
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)      
+        {
+            // configures one-to-many relationship
+            // modelBuilder.Entity<Product>()
+            // .HasOne<Category>(p => p.Category)
+            // .WithMany(b => b.Products)
+            // .HasForeignKey(p => p.CategoryId);
+        }
 
         public DbSet<User> Users {get; set;}
         public DbSet<Product> Products {get; set;}
         public DbSet<Category> Categories {get; set;}
+
+        
     }
 }

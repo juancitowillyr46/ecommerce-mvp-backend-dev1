@@ -14,8 +14,8 @@ namespace WebApi.Data
         }
 
         public void CreateUser(User user)
-        {
-            throw new System.NotImplementedException();
+        {   
+            _context.Users.Add(user);
         }
 
         public void DeleteUser(int id)
@@ -41,6 +41,11 @@ namespace WebApi.Data
         public void UpdateUser(User user)
         {
             throw new System.NotImplementedException();
+        }
+
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() > 0);
         }
     }
 }

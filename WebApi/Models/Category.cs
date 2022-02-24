@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Models
@@ -15,5 +16,7 @@ namespace WebApi.Models
         
         [Required]
         public string Image {get; set;}
+
+        public ICollection<Product> Products { get; set; }
     }
 }

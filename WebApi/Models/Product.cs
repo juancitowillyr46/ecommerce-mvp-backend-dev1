@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Models
 {
@@ -18,6 +19,11 @@ namespace WebApi.Models
 
         [Required]
         public decimal Price {get; set;}
+
+        //[ForeignKey("Category")]
+        public int CategoryId {get; set;}
+
+        public Category Category {get; set;}
 
     }
 }

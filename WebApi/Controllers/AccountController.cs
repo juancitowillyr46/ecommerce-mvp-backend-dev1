@@ -19,15 +19,16 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost()]
-        public ActionResult <User> GetUserByEmail(UserLoginDto userLoginDto)
+        [HttpPost("login")]
+        public ActionResult <UserReadDto> LoginUser(UserRequestLoginDto userLoginDto)
         {   
             int errorCount = 0;
-            User userGetData = null;
+            User userModel = null;
             if(userLoginDto.Email != null) {
-                userGetData = _repository.GetUserByEmail(userLoginDto.Email);
-                if(userGetData != null){
-                    if(userGetData.Password == userLoginDto.Password)
+                userModel = _repository.GetUserByEmail(userLoginDto.Email);
+                if(userModel != null){
+                    bool verify = BCrypt.Net.BCrypt.Verify(userLoginDto.Password, userModel.Password);
+                    if(verify)
                     {
                         errorCount = 0;
                     } else {
@@ -43,9 +44,26 @@ namespace WebApi.Controllers
             if(errorCount > 0) {
                 return Unauthorized();
             } else {
-                return Ok(_mapper.Map<UserReadDto>(userGetData));
+                return Ok(_mapper.Map<UserReadDto>(userModel));
             }
 
+        }
+
+        [HttpPost("register")]
+        public ActionResult <UserReadDto> RegisterUser(UserRequestRegisterDto userRegisterDto)
+        {
+            
+            var userModel = _mapper.Map<User>(userRegisterDto);
+            userModel.Username = userRegisterDto.Email;
+            userModel.CreatedOn = System.DateTime.Now;
+            userModel.Block = false;
+            userModel.Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password);
+
+            _repository.CreateUser(userModel);
+            _repository.SaveChanges();
+
+            var userReadDto = _mapper.Map<UserReadDto>(userModel);
+            return Ok(userReadDto);
         }
     }
 }

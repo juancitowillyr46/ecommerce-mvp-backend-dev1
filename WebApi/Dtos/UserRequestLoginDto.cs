@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Dtos
 {   
-    public class UserLoginDto
+    public class UserRequestLoginDto
     {
         [Required]
         [EmailAddress]
