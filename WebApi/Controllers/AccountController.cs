@@ -19,8 +19,8 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("login")]
-        public ActionResult <UserReadDto> LoginUser(UserRequestLoginDto userLoginDto)
+        [HttpPost("Login")]
+        public ActionResult <UserResponseLoginDto> LoginUser(UserRequestLoginDto userLoginDto)
         {   
             int errorCount = 0;
             User userModel = null;
@@ -44,12 +44,15 @@ namespace WebApi.Controllers
             if(errorCount > 0) {
                 return Unauthorized();
             } else {
-                return Ok(_mapper.Map<UserReadDto>(userModel));
+                var userResponse = _mapper.Map<UserResponseLoginDto>(userModel);
+                userResponse.FullName = userModel.Customer.FirstName + " " + userModel.Customer.LastName;
+                userResponse.Token = "token";
+                return Ok(userResponse);
             }
 
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public ActionResult <UserReadDto> RegisterUser(UserRequestRegisterDto userRegisterDto)
         {
             
@@ -58,6 +61,14 @@ namespace WebApi.Controllers
             userModel.CreatedOn = System.DateTime.Now;
             userModel.Block = false;
             userModel.Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password);
+
+            // Adicionando información del cliente 
+            // TODO: Repositorio
+            userModel.Customer = new Customer {
+                FirstName = userRegisterDto.FirstName,
+                LastName = userRegisterDto.LastName,
+                Email = userRegisterDto.Email
+            };
 
             _repository.CreateUser(userModel);
             _repository.SaveChanges();

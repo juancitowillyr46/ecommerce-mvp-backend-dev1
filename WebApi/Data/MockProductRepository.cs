@@ -15,7 +15,7 @@ namespace WebApi.Data
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts(int categoryId)
         {
             var productsItems = new List<Product> 
             {

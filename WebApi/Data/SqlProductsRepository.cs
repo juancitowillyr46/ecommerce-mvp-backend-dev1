@@ -24,9 +24,19 @@ namespace WebApi.Data
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<Product> GetAllProducts(int categoryId)
         {
-            return _context.Products.Include(p => p.Category).ToList();
+            // var new_list = from p in db.People
+            //        join c in db.Companies on p.Company.Id equals c.Id
+            //        select new { p, c };
+            
+            if(categoryId > 0)
+            {
+                return _context.Products.Include(p => p.Category).ToList().Where(w => w.CategoryId == categoryId);
+            } else 
+            {
+                return _context.Products.Include(p => p.Category).ToList();
+            }
         }
 
         public Product GetProductById(int id)

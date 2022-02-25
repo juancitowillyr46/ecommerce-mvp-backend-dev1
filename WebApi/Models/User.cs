@@ -23,5 +23,7 @@ namespace WebApi.Models
 
         [Required]
         public Boolean Block {get; set;}
+
+        public Customer Customer {get; set;}
     }
 }

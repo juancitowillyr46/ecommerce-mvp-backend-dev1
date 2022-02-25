@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 
 namespace WebApi.Data
@@ -30,7 +31,7 @@ namespace WebApi.Data
 
         public User GetUserByEmail(string email)
         {
-            return _context.Users.FirstOrDefault<User>(opt => opt.Email == email);
+            return _context.Users.Include(u => u.Customer).FirstOrDefault<User>(opt => opt.Email == email);
         }
 
         public User GetUserById(int id)

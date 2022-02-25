@@ -10,6 +10,7 @@ namespace WebApi.Profiles
         {
             CreateMap<User, UserReadDto>();
             CreateMap<UserRequestRegisterDto, User>();
+            CreateMap<User, UserResponseLoginDto>();
         }
     }
 }

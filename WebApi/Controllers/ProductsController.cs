@@ -20,10 +20,10 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet()]
-        public ActionResult <IEnumerable<ProductReadDto>> GetAllProducts()
+        [HttpGet("ByCategory/{categoryId}")]
+        public ActionResult <IEnumerable<ProductReadDto>> GetAllProducts(int categoryId)
         {
-            var productItems = _repository.GetAllProducts();
+            var productItems = _repository.GetAllProducts(categoryId);
             return Ok(_mapper.Map<List<ProductReadDto>>(productItems));
         }
 
