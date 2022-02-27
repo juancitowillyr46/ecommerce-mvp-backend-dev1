@@ -9,6 +9,7 @@ namespace WebApi.Profiles
     {
         public ShoppingCartsDetailsProfile()
         {
+            CreateMap<ShoppingCartDetailCreate, ShoppingCartDetail>();
             CreateMap<ShoppingCartDetailRequestDto,  ShoppingCartDetail>();
         }
     }

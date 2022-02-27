@@ -24,31 +24,19 @@ namespace WebApi.Controllers
         [HttpPost("")]
         public ActionResult<ShoppingCart> CreateShoppingCart(ShoppingCartCreateRequestDto shoppingCartCreateDto)
         {
-            decimal totalVentas = 0;
-
-            // TODO: otra reglas comerciales
-            ICollection<ShoppingCartDetail> lstCreateModelDetail = new List<ShoppingCartDetail>();
-            foreach (var product in shoppingCartCreateDto.Products)
-            {
-                var subTotal = (product.Quantity * product.Price);
-                totalVentas = totalVentas + subTotal;
-                var productMapper = _mapper.Map<ShoppingCartDetail>(product);
-                productMapper.SubTotal = subTotal;
-                lstCreateModelDetail.Add(productMapper);
-            }
-
-            // Sum(x => x.Quantity)
-            var createModelShoppinCart = new ShoppingCart {
-                Code = System.Guid.NewGuid().ToString(),
-                QuantityProducts = shoppingCartCreateDto.Products.Count,
-                CreatedOn = System.DateTime.Now,
-                Total = totalVentas
-            };
-
-            _shoppingCartsRepository.CreateShoppingCart(createModelShoppinCart, lstCreateModelDetail);
-
-            return Ok(_mapper.Map<ShoppingCartCreateResponseDto>(createModelShoppinCart));
+            var shoppingCartMapper = _mapper.Map<ShoppingCart>(shoppingCartCreateDto);
+            shoppingCartMapper.Code = System.Guid.NewGuid().ToString();
+            shoppingCartMapper.CreatedOn = System.DateTime.Now;
+            var getShoppingCart = _shoppingCartsRepository.CreateShoppingCart(shoppingCartMapper);
+            _shoppingCartsRepository.SaveChanges();
+            return Ok(_mapper.Map<ShoppingCartCreateResponseDto>(shoppingCartMapper));
         }
 
+        // [HttpPut("")]
+        // public ActionResult<ShoppingCart> UpdateShoppinCart(ShoppingCartCreateRequestDto shoppingCartCreateDto)
+        // {
+        //     _shoppingCartsDetailRepository.GetShoppingCartDetail(shoppingCartCreateDto.)
+        //     return Ok();
+        // }
     }
 }

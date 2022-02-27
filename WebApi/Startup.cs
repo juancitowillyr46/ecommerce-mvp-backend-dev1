@@ -39,6 +39,7 @@ namespace api
             services.AddScoped<ICategoriesRepository, SqlCategoriesRepository>();
             services.AddScoped<IProductRepository, SqlProductsRepository>();
             services.AddScoped<IShoppingCartsRepository, SqlShoppingCartsRepository>();
+            services.AddScoped<IShoppingCartsDetailRepository, SqlShoppingCartsDetailsRepository>();
 
             // Automapper para DTO
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -4,6 +4,7 @@ namespace WebApi.Dtos
 {
     public class ShoppingCartCreateRequestDto
     {
-        public List<ShoppingCartDetailRequestDto> Products {get; set;}
+        public int QuantityProducts {get; set;} 
+        public decimal Total {get; set;}
     }
 }

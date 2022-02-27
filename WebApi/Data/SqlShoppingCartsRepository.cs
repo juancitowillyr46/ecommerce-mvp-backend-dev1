@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApi.Data
 {
@@ -11,21 +12,11 @@ namespace WebApi.Data
             _context = context;
         }
 
-        public ShoppingCart CreateShoppingCart(ShoppingCart shoppingCart, ICollection<ShoppingCartDetail> createModelDetail)
+        public ShoppingCart CreateShoppingCart(ShoppingCart shoppingCart)
         {
             var modelCreate = shoppingCart;
             if(shoppingCart != null) {
                 _context.ShoppingCarts.Add(shoppingCart);
-                _context.SaveChanges();
-
-                foreach (var item in createModelDetail)
-                {
-                    item.ShoppingCartId = shoppingCart.Id;
-                    _context.ShoppingCartsDetails.Add(item);
-                    //shoppingCart.ShoppingCartsDetails.Add(item);
-                    _context.SaveChanges();
-                }
-                
             }
 
             return shoppingCart;
@@ -36,8 +27,15 @@ namespace WebApi.Data
             throw new System.NotImplementedException();
         }
 
+        public bool SaveChanges()
+        {
+            return (_context.SaveChanges() > 0);
+        }
+
         public bool UpdateShoppingCart(int id)
         {
+           //var shoppingFind =  _context.ShoppingCarts.FirstOrDefault(s => s.Id == id).Id;
+           
             throw new System.NotImplementedException();
         }
     }
