@@ -11,6 +11,8 @@ namespace WebApi.Data
 
         void UpdateDetail(ShoppingCartDetail shoppingCartDetail);
 
+        void DeleteItem(int id);
+
         bool SaveChanges();
     }
 }

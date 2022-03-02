@@ -47,8 +47,6 @@ namespace WebApi.Controllers
                 return NotFound();
             }   
 
-            
-
             var itemToPatch =  _mapper.Map<ShoppingCartDetailPatchDto>(itemModelFromRepo);
             patchDoc.ApplyTo(itemToPatch, ModelState);
             if(!TryValidateModel(itemToPatch))
@@ -70,5 +68,17 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
+
+        [HttpDelete("{id}")]
+        public ActionResult RemoveItemShoppingCart(int id)
+        {
+            var findItem = _shoppingCartsDetailRepository.GetShoppingCartDetailById(id);;
+            if(findItem == null) {
+                return NotFound();
+            }
+            _shoppingCartsDetailRepository.DeleteItem(id);
+            _shoppingCartsDetailRepository.SaveChanges();
+            return NoContent();
+        }
     }
 }

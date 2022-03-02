@@ -16,6 +16,12 @@ namespace WebApi.Data
             _context.ShoppingCartsDetails.Add(shoppingCartDetail);
         }
 
+        public void DeleteItem(int id)
+        {
+            var getShoppingItem = GetShoppingCartDetailById(id);
+            _context.ShoppingCartsDetails.Remove(getShoppingItem);
+        }
+
         public ShoppingCartDetail GetShoppingCartDetail(int productId, int shoppingCartId)
         {
             var findItemProduct = _context.ShoppingCartsDetails
@@ -38,5 +44,7 @@ namespace WebApi.Data
         {
             //SaveChanges();
         }
+
+        
     }
 }
