@@ -11,6 +11,7 @@ namespace WebApi.Profiles
         {
             CreateMap<ShoppingCartCreateRequestDto, ShoppingCart>();
             CreateMap<ShoppingCart, ShoppingCartCreateResponseDto>();
+            CreateMap<ShoppingCart, ShoppingCartReadDto>();
         }
     }
 }

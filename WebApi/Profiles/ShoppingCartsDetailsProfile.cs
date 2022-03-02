@@ -14,6 +14,9 @@ namespace WebApi.Profiles
             
             CreateMap<ShoppingCartDetailPatchDto, ShoppingCartDetail>();
             CreateMap<ShoppingCartDetail, ShoppingCartDetailPatchDto>();
+
+            CreateMap<ShoppingCartDetail, ShoppingCartDetailReadDto>();
+            
         }
     }
 }

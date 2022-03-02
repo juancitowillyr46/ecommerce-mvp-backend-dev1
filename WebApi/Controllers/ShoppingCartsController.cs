@@ -42,5 +42,12 @@ namespace WebApi.Controllers
             _shoppingCartsRepository.SaveChanges();
             return Ok(_mapper.Map<ShoppingCartCreateResponseDto>(getShoppingCart));
         }
+
+        [HttpGet("{id}")]
+        public ActionResult<ShoppingCartReadDto> GetShoppingCartById(int id) 
+        {
+            var getShoppingCart = _shoppingCartsRepository.GetShoppingCartById(id);
+            return Ok(_mapper.Map<ShoppingCartReadDto>(getShoppingCart));
+        }
     }
 }

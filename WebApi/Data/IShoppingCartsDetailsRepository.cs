@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace WebApi.Data
 {
     public interface IShoppingCartsDetailRepository
@@ -8,6 +10,8 @@ namespace WebApi.Data
         ShoppingCartDetail GetShoppingCartDetail(int productId, int shoppingCartId);
 
         ShoppingCartDetail GetShoppingCartDetailById(int id);
+
+        List<ShoppingCartDetail> GetShoppingItemsByShoppingCartId(int shoppingCartId);
 
         void UpdateDetail(ShoppingCartDetail shoppingCartDetail);
 

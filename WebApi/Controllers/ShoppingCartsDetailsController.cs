@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -72,13 +73,20 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult RemoveItemShoppingCart(int id)
         {
-            var findItem = _shoppingCartsDetailRepository.GetShoppingCartDetailById(id);;
+            var findItem = _shoppingCartsDetailRepository.GetShoppingCartDetailById(id);
             if(findItem == null) {
                 return NotFound();
             }
             _shoppingCartsDetailRepository.DeleteItem(id);
             _shoppingCartsDetailRepository.SaveChanges();
             return NoContent();
+        }
+
+        [HttpGet("all/{shoppingCartId}")]
+        public ActionResult GetItemsByShoppingCartId(int shoppingCartId) 
+        {
+            var listShoppingCartDetail = _shoppingCartsDetailRepository.GetShoppingItemsByShoppingCartId(shoppingCartId);
+            return Ok(_mapper.Map<List<ShoppingCartDetailReadDto>>(listShoppingCartDetail));
         }
     }
 }

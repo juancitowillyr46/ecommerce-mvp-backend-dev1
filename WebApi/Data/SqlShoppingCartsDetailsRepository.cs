@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WebApi.Data
@@ -33,6 +34,11 @@ namespace WebApi.Data
         public ShoppingCartDetail GetShoppingCartDetailById(int id)
         {
             return _context.ShoppingCartsDetails.FirstOrDefault(s => s.Id == id);
+        }
+
+        public List<ShoppingCartDetail> GetShoppingItemsByShoppingCartId(int shoppingCartId)
+        {
+            return _context.ShoppingCartsDetails.Where(i => i.ShoppingCartId == shoppingCartId).ToList<ShoppingCartDetail>();
         }
 
         public bool SaveChanges()
