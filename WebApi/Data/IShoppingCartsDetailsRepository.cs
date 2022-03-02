@@ -7,6 +7,8 @@ namespace WebApi.Data
         
         ShoppingCartDetail GetShoppingCartDetail(int productId, int shoppingCartId);
 
+        ShoppingCartDetail GetShoppingCartDetailById(int id);
+
         void UpdateDetail(ShoppingCartDetail shoppingCartDetail);
 
         bool SaveChanges();

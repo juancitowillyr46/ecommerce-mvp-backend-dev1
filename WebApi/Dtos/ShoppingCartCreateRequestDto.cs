@@ -4,7 +4,7 @@ namespace WebApi.Dtos
 {
     public class ShoppingCartCreateRequestDto
     {
-        public int QuantityProducts {get; set;} 
-        public decimal Total {get; set;}
+        public int UserId {get; set;}
+        //public string IpAddress {get; set;}
     }
 }

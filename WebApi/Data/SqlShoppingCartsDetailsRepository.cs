@@ -24,6 +24,11 @@ namespace WebApi.Data
             return findItemProduct;
         }
 
+        public ShoppingCartDetail GetShoppingCartDetailById(int id)
+        {
+            return _context.ShoppingCartsDetails.FirstOrDefault(s => s.Id == id);
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() > 0);

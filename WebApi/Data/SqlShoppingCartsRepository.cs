@@ -27,6 +27,11 @@ namespace WebApi.Data
             throw new System.NotImplementedException();
         }
 
+        public ShoppingCart GetShoppingCartById(int id)
+        {
+           return _context.ShoppingCarts.FirstOrDefault<ShoppingCart>(opt => opt.Id == id);
+        }
+
         public bool SaveChanges()
         {
             return (_context.SaveChanges() > 0);

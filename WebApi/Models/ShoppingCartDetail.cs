@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Data
@@ -14,7 +15,7 @@ namespace WebApi.Data
         public int Quantity {get; set;}
 
         [Required]
-        public decimal SubTotal {get; set;}
+        public decimal Total {get; set;}
 
         [Required]
         public int ShoppingCartId {get; set;}
@@ -24,5 +25,8 @@ namespace WebApi.Data
 
         [Required]
         public ShoppingCart ShoppingCart {get; set;}
+        public DateTime CreatedOn {get; set;}
+        public DateTime UpdatedOn {get; set;}
+        public string IpAddress { get; set; }
     }
 }

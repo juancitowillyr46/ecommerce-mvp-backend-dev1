@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using WebApi.Data;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace api
 {
@@ -32,7 +33,9 @@ namespace api
             // Configuración Db Context (Base de datos)
             services.AddDbContext<AppDbContext> (opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             // Configuración Interfaces
             services.AddScoped<IUsersRepository, SqlUsersRepository>();

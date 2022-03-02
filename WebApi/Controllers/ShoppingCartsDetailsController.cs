@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
 using WebApi.Dtos;
@@ -19,12 +20,54 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("")]
-        public ActionResult<ShoppingCart> AddItemToShoppintCart(ShoppingCartDetailCreate shoppingCartDetailCreate)
+        public ActionResult<ShoppingCartDetail> AddItemToShoppintCart(ShoppingCartDetailCreate shoppingCartDetailCreate)
         {
-            var shoppingCartDetail = _mapper.Map<ShoppingCartDetail>(shoppingCartDetailCreate);   
+            var shoppingCartDetail = _mapper.Map<ShoppingCartDetail>(shoppingCartDetailCreate);  
+            var remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString(); 
+            shoppingCartDetail.Total = shoppingCartDetail.Quantity * shoppingCartDetail.Price;
+
+            // Datos de Auditoria
+            shoppingCartDetail.IpAddress = remoteIpAddress;
+            shoppingCartDetail.CreatedOn = System.DateTime.Now;
+
+
             _shoppingCartsDetailRepository.CreateDetail(shoppingCartDetail);
             _shoppingCartsDetailRepository.SaveChanges();
             return Ok(shoppingCartDetail);
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult<ShoppingCartDetail> UpdateItemShoppingCart(int id, JsonPatchDocument<ShoppingCartDetailPatchDto> patchDoc)
+        {
+            var itemModelFromRepo = _shoppingCartsDetailRepository.GetShoppingCartDetailById(id);
+            
+
+            if(itemModelFromRepo == null)
+            {
+                return NotFound();
+            }   
+
+            
+
+            var itemToPatch =  _mapper.Map<ShoppingCartDetailPatchDto>(itemModelFromRepo);
+            patchDoc.ApplyTo(itemToPatch, ModelState);
+            if(!TryValidateModel(itemToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(itemToPatch, itemModelFromRepo);
+
+            itemModelFromRepo.Total = itemModelFromRepo.Quantity * itemModelFromRepo.Price;
+
+            // Datos de Auditoria
+            itemModelFromRepo.UpdatedOn = System.DateTime.Now;
+
+            _shoppingCartsDetailRepository.UpdateDetail(itemModelFromRepo);
+            
+            _shoppingCartsDetailRepository.SaveChanges();
+
+            return NoContent();
         }
 
     }
