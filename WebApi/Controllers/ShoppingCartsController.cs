@@ -13,11 +13,13 @@ namespace WebApi.Controllers
     {
 
         private readonly IShoppingCartsRepository _shoppingCartsRepository;
+        private readonly IShoppingCartsDetailRepository _shoppingCartsDetailRepository;
         private readonly IMapper _mapper;
 
-        public ShoppingCartsController(IShoppingCartsRepository shoppingCartsRepository, IMapper mapper)
+        public ShoppingCartsController(IShoppingCartsRepository shoppingCartsRepository, IMapper mapper, IShoppingCartsDetailRepository shoppingCartsDetailRepository)
         {
             _shoppingCartsRepository = shoppingCartsRepository;
+            _shoppingCartsDetailRepository = shoppingCartsDetailRepository;
             _mapper = mapper;
         }
 
@@ -47,7 +49,18 @@ namespace WebApi.Controllers
         public ActionResult<ShoppingCartReadDto> GetShoppingCartById(int id) 
         {
             var getShoppingCart = _shoppingCartsRepository.GetShoppingCartById(id);
-            return Ok(_mapper.Map<ShoppingCartReadDto>(getShoppingCart));
+            var cartItems = _mapper.Map<ShoppingCartReadDto>(getShoppingCart);
+
+            var modelItems = _shoppingCartsDetailRepository.GetShoppingItemsByShoppingCartId(getShoppingCart.Id);
+            cartItems.Items = _mapper.Map<List<ShoppingCartDetailReadDto>>(modelItems);
+            //new List<ShoppingCartDetailReadDto>();
+            // foreach (var item in modelItems)
+            // {
+            //     var dtoItem = _mapper.Map<ShoppingCartDetailReadDto>(item);
+
+            //     cartItems.Items.Add(dtoItem);
+            // }
+            return Ok(_mapper.Map<ShoppingCartReadDto>(cartItems));
         }
     }
 }

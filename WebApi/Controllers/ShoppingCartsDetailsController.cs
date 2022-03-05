@@ -82,7 +82,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        [HttpGet("all/{shoppingCartId}")]
+        [HttpGet("Details/{shoppingCartId}")]
         public ActionResult GetItemsByShoppingCartId(int shoppingCartId) 
         {
             var listShoppingCartDetail = _shoppingCartsDetailRepository.GetShoppingItemsByShoppingCartId(shoppingCartId);
