@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using WebApi.Data;
 using WebApi.Dtos;
+using WebApi.Dtos.ShoppingCartsItems;
 
 namespace WebApi.Profiles
 {
@@ -9,13 +10,13 @@ namespace WebApi.Profiles
     {
         public ShoppingCartsDetailsProfile()
         {
-            CreateMap<ShoppingCartDetailCreate, ShoppingCartDetail>();
-            CreateMap<ShoppingCartDetailRequestDto,  ShoppingCartDetail>();
+            CreateMap<ShoppingCartItemCreateDto, ShoppingCartItem>();
+            CreateMap<ShoppingCartDetailRequestDto,  ShoppingCartItem>();
             
-            CreateMap<ShoppingCartDetailPatchDto, ShoppingCartDetail>();
-            CreateMap<ShoppingCartDetail, ShoppingCartDetailPatchDto>();
+            CreateMap<ShoppingCartDetailPatchDto, ShoppingCartItem>();
+            CreateMap<ShoppingCartItem, ShoppingCartDetailPatchDto>();
 
-            CreateMap<ShoppingCartDetail, ShoppingCartDetailReadDto>();
+            CreateMap<ShoppingCartItem, ShoppingCartItemReadDto>();
             
         }
     }

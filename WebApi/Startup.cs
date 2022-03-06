@@ -14,6 +14,8 @@ using Microsoft.OpenApi.Models;
 using WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
+using WebApi.Services;
+using WebApi.Services.Interface;
 
 namespace api
 {
@@ -42,7 +44,11 @@ namespace api
             services.AddScoped<ICategoriesRepository, SqlCategoriesRepository>();
             services.AddScoped<IProductRepository, SqlProductsRepository>();
             services.AddScoped<IShoppingCartsRepository, SqlShoppingCartsRepository>();
-            services.AddScoped<IShoppingCartsDetailRepository, SqlShoppingCartsDetailsRepository>();
+            services.AddScoped<IShoppingCartsItemsRepository, SqlShoppingCartsItemsRepository>();
+
+            services.AddScoped<IShoppingCartsService, ShoppingCartsService>();
+            services.AddScoped<IShoppingCartsItemsService, ShoppingCartsItemsService>();
+            services.AddScoped<IProductsService, ProductsService>();
 
             // Automapper para DTO
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

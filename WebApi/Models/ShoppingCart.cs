@@ -12,6 +12,6 @@ namespace  WebApi.Data
         public DateTime CreatedOn {get; set;}
         public DateTime UpdatedOn {get; set;}
         public string IpAddress { get; set; }
-        public ICollection<ShoppingCartDetail> ShoppingCartsDetails {get; set;}
+        public ICollection<ShoppingCartItem> ShoppingCartsDetails {get; set;}
     }
 }

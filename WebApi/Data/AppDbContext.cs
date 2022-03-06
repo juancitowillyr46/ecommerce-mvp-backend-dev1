@@ -25,7 +25,7 @@ namespace WebApi.Data
 
         /* Models Shopping Cart */
         public DbSet<ShoppingCart> ShoppingCarts {get; set;}
-        public DbSet<ShoppingCartDetail> ShoppingCartsDetails {get; set;}
+        public DbSet<ShoppingCartItem> ShoppingCartsItems {get; set;}
         
     }
 }

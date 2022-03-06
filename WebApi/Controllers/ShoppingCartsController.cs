@@ -3,7 +3,9 @@ using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
-using WebApi.Dtos;
+using WebApi.Dtos.ShoppingCarts;
+using WebApi.Services;
+using WebApi.Services.Interface;
 
 namespace WebApi.Controllers
 {
@@ -11,56 +13,28 @@ namespace WebApi.Controllers
     [ApiController]
     public class ShoppingCartsController: ControllerBase
     {
+        private readonly IShoppingCartsService _shoppingCartsService;
 
-        private readonly IShoppingCartsRepository _shoppingCartsRepository;
-        private readonly IShoppingCartsDetailRepository _shoppingCartsDetailRepository;
-        private readonly IMapper _mapper;
-
-        public ShoppingCartsController(IShoppingCartsRepository shoppingCartsRepository, IMapper mapper, IShoppingCartsDetailRepository shoppingCartsDetailRepository)
+        public ShoppingCartsController(IShoppingCartsService shoppingCartsService)
         {
-            _shoppingCartsRepository = shoppingCartsRepository;
-            _shoppingCartsDetailRepository = shoppingCartsDetailRepository;
-            _mapper = mapper;
+            _shoppingCartsService = shoppingCartsService;
         }
 
         [HttpPost("")]
-        public ActionResult<ShoppingCart> CreateShoppingCart(ShoppingCartCreateRequestDto shoppingCartCreateDto)
+        public ActionResult<ShoppingCartReadDto> CreateShoppingCart(ShoppingCartCreateDto shoppingCartCreateDto)
         {
-            var shoppingCartMapper = _mapper.Map<ShoppingCart>(shoppingCartCreateDto);
-            shoppingCartMapper.Code = System.Guid.NewGuid().ToString();
-            var remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            shoppingCartMapper.IpAddress = remoteIpAddress;
-            shoppingCartMapper.CreatedOn = System.DateTime.Now;
-            var getShoppingCart = _shoppingCartsRepository.CreateShoppingCart(shoppingCartMapper);
-            _shoppingCartsRepository.SaveChanges();
-            return Ok(_mapper.Map<ShoppingCartCreateResponseDto>(shoppingCartMapper));
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult<ShoppingCart> UpdateShoppinCart(int id)
-        {
-            var getShoppingCart = _shoppingCartsRepository.GetShoppingCartById(id);
-            getShoppingCart.UpdatedOn = System.DateTime.Now;
-            _shoppingCartsRepository.SaveChanges();
-            return Ok(_mapper.Map<ShoppingCartCreateResponseDto>(getShoppingCart));
+            shoppingCartCreateDto.IpAddress = (shoppingCartCreateDto.IpAddress == "")? Request.HttpContext.Connection.RemoteIpAddress.ToString() : shoppingCartCreateDto.IpAddress;
+            var shoppingCartReadDto = _shoppingCartsService.CreateShoppingCart(shoppingCartCreateDto);
+            return Ok(shoppingCartReadDto);
         }
 
         [HttpGet("{id}")]
         public ActionResult<ShoppingCartReadDto> GetShoppingCartById(int id) 
-        {
-            var getShoppingCart = _shoppingCartsRepository.GetShoppingCartById(id);
-            var cartItems = _mapper.Map<ShoppingCartReadDto>(getShoppingCart);
-
-            var modelItems = _shoppingCartsDetailRepository.GetShoppingItemsByShoppingCartId(getShoppingCart.Id);
-            cartItems.Items = _mapper.Map<List<ShoppingCartDetailReadDto>>(modelItems);
-            //new List<ShoppingCartDetailReadDto>();
-            // foreach (var item in modelItems)
-            // {
-            //     var dtoItem = _mapper.Map<ShoppingCartDetailReadDto>(item);
-
-            //     cartItems.Items.Add(dtoItem);
-            // }
-            return Ok(_mapper.Map<ShoppingCartReadDto>(cartItems));
+        {   
+            if(!_shoppingCartsService.ValidateShoppingCartById(id)){
+                return NotFound();
+            }
+            return Ok(_shoppingCartsService.GetShoppingCartById(id));
         }
     }
 }

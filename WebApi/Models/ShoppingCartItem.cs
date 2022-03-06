@@ -1,9 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Models;
 
 namespace WebApi.Data
 {
-    public class ShoppingCartDetail
+    public class ShoppingCartItem
     {
         [Required]
         public int Id { get; set; }
@@ -23,10 +24,13 @@ namespace WebApi.Data
         [Required]
         public decimal Price {get; set;}
 
-        [Required]
+        
         public ShoppingCart ShoppingCart {get; set;}
         public DateTime CreatedOn {get; set;}
         public DateTime UpdatedOn {get; set;}
         public string IpAddress { get; set; }
+
+        public Product Product {get; set;}
+
     }
 }
