@@ -1,6 +1,6 @@
 using WebApi.Dtos;
 
-namespace  WebApi.Services.Interface
+namespace WebApi.Services.Interface
 {
     public interface IProductsService
     {

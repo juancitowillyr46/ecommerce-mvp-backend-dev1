@@ -36,7 +36,7 @@ namespace WebApi.Data
 
         public User GetUserById(int id)
         {
-            return _context.Users.FirstOrDefault<User>(opt => opt.Id == id);
+            return _context.Users.Include(u => u.Customer).FirstOrDefault<User>(opt => opt.Id == id);
         }
 
         public void UpdateUser(User user)

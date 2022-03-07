@@ -11,5 +11,7 @@ namespace WebApi.Services.Interface
         ShoppingCartReadDto GetShoppingCartById(int id);
 
         bool ValidateShoppingCartById(int id);
+
+        bool UpdateStateShoppingCart(int id);
     }
 }

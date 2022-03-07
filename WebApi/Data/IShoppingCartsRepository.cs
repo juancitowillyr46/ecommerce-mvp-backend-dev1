@@ -9,5 +9,7 @@ namespace WebApi.Data
         bool UpdateShoppingCart(int id);
         bool SaveChanges();
         ShoppingCart GetShoppingCartById(int id);
+
+        bool UpdateStateShoppingCart(int id, int stateId);
     }
 }

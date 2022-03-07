@@ -43,5 +43,14 @@ namespace WebApi.Data
            
             throw new System.NotImplementedException();
         }
+
+        public bool UpdateStateShoppingCart(int id, int stateId)
+        {
+            var shoppingCartModel = GetShoppingCartById(id);
+            shoppingCartModel.StateId = stateId;
+            shoppingCartModel.UpdatedOn = System.DateTime.Now;
+            return SaveChanges();
+        }
+
     }
 }

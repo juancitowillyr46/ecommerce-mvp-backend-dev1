@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using AutoMapper;
 using WebApi.Data;
 using WebApi.Dtos.ShoppingCarts;
 using WebApi.Dtos.ShoppingCartsItems;
 using WebApi.Services.Interface;
+using WebApi.Utilities;
 
 namespace WebApi.Services
 {
@@ -28,6 +30,7 @@ namespace WebApi.Services
             shoppingCartModel.Code = System.Guid.NewGuid().ToString();
             shoppingCartModel.IpAddress = shoppingCartCreateDto.IpAddress;
             shoppingCartModel.CreatedOn = System.DateTime.Now;
+            shoppingCartModel.StateId = Convert.ToInt32(EnumShoppingStates.StateId.Pending);
 
             _shoppingCartsRepository.CreateShoppingCart(shoppingCartModel);
             _shoppingCartsRepository.SaveChanges();
@@ -49,6 +52,14 @@ namespace WebApi.Services
         public bool UpdateShoppingCart(int id)
         {
             var shoppingCartModel = _shoppingCartsRepository.GetShoppingCartById(id);
+            shoppingCartModel.UpdatedOn = System.DateTime.Now;
+            return _shoppingCartsRepository.SaveChanges();
+        }
+
+        public bool UpdateStateShoppingCart(int id)
+        {
+            var shoppingCartModel = _shoppingCartsRepository.GetShoppingCartById(id);
+            shoppingCartModel.StateId = 1;
             shoppingCartModel.UpdatedOn = System.DateTime.Now;
             return _shoppingCartsRepository.SaveChanges();
         }

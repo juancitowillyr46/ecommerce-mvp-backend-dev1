@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using WebApi.Services;
 using WebApi.Services.Interface;
+using WebApi.Interfaces;
+using WebApi.Customers;
 
 namespace api
 {
@@ -45,10 +47,14 @@ namespace api
             services.AddScoped<IProductRepository, SqlProductsRepository>();
             services.AddScoped<IShoppingCartsRepository, SqlShoppingCartsRepository>();
             services.AddScoped<IShoppingCartsItemsRepository, SqlShoppingCartsItemsRepository>();
+            services.AddScoped<ICustomersRepository, SqlCustomersRepository>();
+            services.AddScoped<IOrdersRepository, SqlOrdersRepository>();
 
             services.AddScoped<IShoppingCartsService, ShoppingCartsService>();
             services.AddScoped<IShoppingCartsItemsService, ShoppingCartsItemsService>();
             services.AddScoped<IProductsService, ProductsService>();
+            services.AddScoped<ICustomersService, CustomersService>();
+            services.AddScoped<IOrdersService, OrdersService>();
 
             // Automapper para DTO
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
